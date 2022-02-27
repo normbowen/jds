@@ -1,0 +1,15 @@
+{
+  "name": "Jackpot Data Server",
+  "version": "1.0.0",
+  "description": "MiniWeb Jackpot Data Server - Provide JSON doc for Jackpot information",
+  "main": "jdserver.js",
+  "scripts": {
+    "start": "node jdserver.js"
+  },
+  "author": "Norm Bowen",
+  "license": "ISC",
+  "dependencies": {
+    "date-and-time": "^2.2.1",
+    "express": "^4.17.3"
+  }
+}

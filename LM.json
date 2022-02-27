@@ -1,0 +1,15 @@
+{
+ "draw_date": "/Date(1631672999000-0300)/",
+    "game": "LottoMax",
+    "guaranteed_draws": null,
+    "last_edit_date": "/Date(1468521063000-0300)/",
+    "next_draw": {
+      "providerDrawId": "42017000749",
+      "draw_date": "/Date(1631932199000-0300)/",
+      "jackpot": 55000000,
+      "estimated_number_of_promotional_draws": 4,
+      "guaranteed_prize_english": null,
+      "guaranteed_prize_french": null,
+      "guaranteed_prize_type": "LottoMax_Cash"
+    }
+}

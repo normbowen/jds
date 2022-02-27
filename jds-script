@@ -1,0 +1,6 @@
+#!/bin/sh
+
+cd /usr/src/app
+export PATH=$PATH:.
+
+./jds full-template.txt > jackpot.json

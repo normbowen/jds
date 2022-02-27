@@ -1,0 +1,168 @@
+#!/bin/sh
+
+# set -xv
+
+#
+# LottoMax winning numbers API - Get Next Draw
+#
+# call LM API once and then parse out standard jackpot and maxmillions (below)
+#
+#LottoMax_ND=`curl -s -X GET "https://dsc.alc.ca/api/winning_numbers/latest/LottoMax" -H "accept: application/json" | jq '.[] .next_draw'`
+#
+#################################################
+# For testing with JP over $50M to get MM
+#
+LottoMax_ND=`cat LM.json | jq '.next_draw'`
+#################################################
+
+# Get LottoMax Jackpot amount
+
+LottoMax_jackpot=`echo $LottoMax_ND | jq '.jackpot'`
+
+# LottoMax number of Millions formatted as ## ie 20
+#
+LottoMax=`expr $LottoMax_jackpot / 1000000`
+#
+#
+#LottoMax=""
+#LottoMax=0
+#LottoMax=1
+#LottoMax=10
+#LottoMax=70
+#
+
+#
+# Add spaces (B) in front of the number depending how many digits
+# For Draw Close value will be 0 so blank out L1 (BBB)
+#
+if [[ -n "$LottoMax" ]] && [ $LottoMax -ne 0 ]
+then
+   if [[ $LottoMax -lt 10 ]]
+   then
+      LottoMax="BB$LottoMax"
+   else
+      LottoMax="B$LottoMax"
+   fi
+else
+   LottoMax="BBB"
+fi
+
+#
+# LottoMax Maxmillions
+#
+#################################################
+# need to add logic to get from API
+#
+LottoMaxMM=`echo $LottoMax_ND | jq '.estimated_number_of_promotional_draws'`
+#
+#################################################
+#
+#
+#LottoMaxMM=""
+#LottoMaxMM=0
+#LottoMaxMM=1
+#LottoMaxMM=10
+#LottoMaxMM=20
+
+#
+# Add spaces (B) in front of the number depending how many digits
+# When LM less than $50M value will be 0 so blank out L3 (BBB)
+#
+if [[ -n "$LottoMaxMM" ]] && [ $LottoMaxMM -ne 0 ]
+then
+   if [[ $LottoMaxMM -lt 10 ]]
+   then
+      LottoMaxMM="BB$LottoMaxMM"
+   else
+      LottoMaxMM="B$LottoMaxMM"
+   fi
+else
+   LottoMaxMM="BBB"
+fi
+
+#
+# Lotto649 winning numbers API - Get Next Draw
+#
+# call 649 API once and then parse out standard jackpot and classic jackpot (below)
+#
+Lotto649_ND=`curl -s -X GET "https://dsc.alc.ca/api/winning_numbers/latest/Lotto649" -H "accept: application/json" | jq '.[] .next_draw'`
+
+
+# Get 649 Jackpot amount
+
+Lotto649_jackpot=`echo $Lotto649_ND | jq '.jackpot'`
+
+#
+# Lotto649 Gold Ball Jackpot (GBJ) number of Millions formatted as ## ie 12
+#
+Lotto649GBJ=`expr $Lotto649_jackpot / 1000000`
+#
+#Lotto649GBJ=""
+#Lotto649GBJ=0
+#Lotto649GBJ=1
+#Lotto649GBJ=10
+#Lotto649GBJ=68
+
+#
+# Add spaces (B) in front of the number depending how many digits
+# For Draw Close value will be 0 so blank out L2 (BBB)
+#
+if [[ -n "$Lotto649GBJ" ]] && [ $Lotto649GBJ -ne 0 ]
+then
+   if [[ $Lotto649GBJ -lt 10 ]]
+   then
+      Lotto649GBJ="BB$Lotto649GBJ"
+   else
+      Lotto649GBJ="B$Lotto649GBJ"
+   fi
+else
+   Lotto649GBJ="BBB"
+fi
+
+#
+# Lotto649 Classic Jackpot (CJ)
+#
+# need to add logic to get from API - use value from jackpot for now
+#
+# .classic_jackpot
+#
+#Lotto649_classic_jackpot=`echo $Lotto649_ND | jq '.classic_jackpot'`
+#Lotto649CJ=`expr $Lotto649_classic_jackpot / 1000000`
+#
+#
+# Lotto649 Classic Jackpot (CJ) number of Millions
+#
+#Lotto649CJ=""
+#Lotto649CJ=0
+#Lotto649CJ=5
+#Lotto649CJ=10
+Lotto649CJ=20
+#
+
+#
+# Add spaces (B) in front of the number depending how many digits
+# If not set or value is 0 blank out L4 (BBB)
+#
+if [[ -n "$Lotto649CJ" ]] && [ $Lotto649CJ -ne 0 ]
+then
+   if [[ $Lotto649CJ -lt 10 ]]
+   then
+      Lotto649CJ="BB$Lotto649CJ"
+   else 
+      Lotto649CJ="B$Lotto649CJ"
+   fi
+else
+   Lotto649CJ="BBB"
+fi
+
+#
+# sed string to substitue values from winning numbers API gathered above with
+# the placeholder in the template.txt file
+#
+JackPot_SED="s/{LottoMax}/$LottoMax/g; s/{Lotto649GBJ}/$Lotto649GBJ/g; s/{LottoMaxMM}/$LottoMaxMM/g; s/{Lotto649CJ}/$Lotto649CJ/g"
+
+#
+# execute sed against the input file (template.txt) to do the substitutions 
+# and remove the linefeeds so the output is in a format readable by the miniweb
+#
+sed "$JackPot_SED" "$@" | tr -d '\012'
