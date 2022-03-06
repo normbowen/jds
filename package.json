@@ -10,6 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "date-and-time": "^2.2.1",
-    "express": "^4.17.3"
+    "express": "^4.17.3",
+    "request-ip": "^2.1.3"
   }
 }

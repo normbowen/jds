@@ -1,0 +1,8 @@
+#!/bin/sh
+
+cd /usr/src/app
+export PATH=$PATH:.
+
+echo -ne "cp jds-BBB jackpot.txt  "; date
+
+cp jds-BBB jackpot.txt

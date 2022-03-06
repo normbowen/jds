@@ -1,0 +1,8 @@
+#!/bin/sh
+
+date
+for i in {1..1000}
+do
+    curl -s -X GET -H "accept: application/json" http://10.0.0.227:3000/jds/MW$i >> jackpot.test
+done
+date

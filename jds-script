@@ -3,4 +3,6 @@
 cd /usr/src/app
 export PATH=$PATH:.
 
-./jds full-template.txt > jackpot.json
+echo -ne "./jds full-template.txt > jackpot.txt  "; date
+
+./jds full-template.txt > jackpot.txt

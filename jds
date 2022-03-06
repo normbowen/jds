@@ -7,12 +7,12 @@
 #
 # call LM API once and then parse out standard jackpot and maxmillions (below)
 #
-#LottoMax_ND=`curl -s -X GET "https://dsc.alc.ca/api/winning_numbers/latest/LottoMax" -H "accept: application/json" | jq '.[] .next_draw'`
+LottoMax_ND=`curl -s -X GET "https://dsc.alc.ca/api/winning_numbers/latest/LottoMax" -H "accept: application/json" | jq '.[] .next_draw'`
 #
 #################################################
 # For testing with JP over $50M to get MM
 #
-LottoMax_ND=`cat LM.json | jq '.next_draw'`
+# LottoMax_ND=`cat LM.json | jq '.next_draw'`
 #################################################
 
 # Get LottoMax Jackpot amount
@@ -134,9 +134,9 @@ fi
 #
 #Lotto649CJ=""
 #Lotto649CJ=0
-#Lotto649CJ=5
+Lotto649CJ=5
 #Lotto649CJ=10
-Lotto649CJ=20
+#Lotto649CJ=20
 #
 
 #
